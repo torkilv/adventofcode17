@@ -1,5 +1,5 @@
 
-import itertools
+import itertools, operator
 
 spreadsheetFile = open("input-2", "r")
 
@@ -7,11 +7,12 @@ spreadsheetFile = open("input-2", "r")
 checkSum = 0
 for line in spreadsheetFile:
 	numbers = map(int, line.split())
-	combinations = list(itertools.permutations(numbers, 2))
-	modulos = map(lambda pair: (pair[0] % pair[1]), combinations)
 
-	divisiblePair = combinations[modulos.index(0)]
-	checkSum += divisiblePair[0] / divisiblePair[1]
+	combinations = itertools.permutations(numbers, 2)
+	for combination in combinations:
+		if combination[0] % combination[1] == 0:
+			checkSum += combination[0] / combination[1]
+			break
 
 
 print checkSum
